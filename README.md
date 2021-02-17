@@ -10,4 +10,4 @@ Redirect Uri = https://107.173.149.207/getToken
 Example Page: https://107.173.149.207
 
 # Generate jks file by keytool
-keytool -genkeypair -alias hqr -keyalg RSA -keypass 123456 -keystore hqr.jks -storepass 123456
+keytool -genkeypair -alias hqr -keyalg RSA -keypass 123456 -keystore hqr.jks -storepass 123456 -validity 3650
