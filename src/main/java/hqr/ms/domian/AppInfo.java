@@ -7,7 +7,6 @@ public class AppInfo {
 	
 	private static AppInfo appInfo;
 	public static AppInfo getInstance() {
-		System.out.println("get instance");
 		if(appInfo==null) {
 			appInfo = new AppInfo();
 		}
