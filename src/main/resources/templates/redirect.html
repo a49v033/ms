@@ -1,0 +1,17 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title></title>
+</head>
+<body>
+<b>Pls wait ...</b>
+<script lang="javascript" type="text/javascript">
+	var clientId = "[[${app.getAppId()}]]";
+	var clientPwd = "[[${app.getAppPwd()}]]";
+	var uri = "[[${app.getRedirectUri()}]]";
+	
+	window.location.href = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id="+clientId+"&response_type=code&scope=Files.ReadWrite.All%20offline_access&redirect_uri="+uri;
+	
+</script>
+
+</body>
+</html>

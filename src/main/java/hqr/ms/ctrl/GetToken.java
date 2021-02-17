@@ -18,16 +18,23 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import hqr.ms.domian.AppInfo;
 import hqr.ms.util.Brower;
 
 @Controller
 public class GetToken {
 	
 	@RequestMapping(value = "/getToken")
-	public ModelAndView grap(@RequestParam(value="code", required = true) String code,@RequestParam(value="uri", required = false, defaultValue = "https://vanyouseea.github.io/hlh/") String uri,@RequestParam(value="clientId", required = false, defaultValue = "9b354133-9271-4398-8797-c2c31ab6329f") String clientId) {
+	public ModelAndView grap(@RequestParam(name = "code", required = true) String code) {
+		AppInfo app = AppInfo.getInstance();
+		String appId = app.getAppId();
+		String appPwd = app.getAppPwd();
+		String uri = app.getRedirectUri();
+		
 		System.out.println("code:"+code);
 		System.out.println("uri:"+uri);
-		System.out.println("clientId:"+clientId);
+		System.out.println("clientId:"+appId);
+		System.out.println("clientId:"+appPwd);
 		
 		String accessToken = "null";
 		String refreshToken = "null";
@@ -41,7 +48,7 @@ public class GetToken {
 		post.setConfig(Brower.getRequestConfig());
 		post.setHeader("Content-Type", "application/x-www-form-urlencoded");
 		
-		String json = "client_id=9b354133-9271-4398-8797-c2c31ab6329f&redirect_uri="+uri+"&client_secret=7TS9.CiIRLJj~6__8G4wG3Sy1cpctyV.Aa&scope=Files.ReadWrite.All%20offline_access&grant_type=authorization_code&code="+code;
+		String json = "client_id="+appId+"&redirect_uri="+uri+"&client_secret="+appPwd+"&scope=Files.ReadWrite.All%20offline_access&grant_type=authorization_code&code="+code;
 		
 		post.setEntity(new StringEntity(json, ContentType.APPLICATION_FORM_URLENCODED));
 
@@ -66,8 +73,7 @@ public class GetToken {
 			e.printStackTrace();
 		}
 		
-		
-		ModelAndView index = new ModelAndView("index");
+		ModelAndView index = new ModelAndView("final");
 		index.addObject("access_token", accessToken);
 		index.addObject("refresh_token", refreshToken);
 		
