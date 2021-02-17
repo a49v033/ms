@@ -1,18 +1,5 @@
 # msToken
-This tool helps get the refresh toke for any App created in portal.azure.com
-
-You just need to prepare 3 items:
-
-Application (client) ID
-
-Client secrets
-
-Configure your web uri to https://ip/getToken
-
-For the Redirect Uri is your IP/getToken
-
-
-Such as your Ip is 107.173.149.207
+This tool helps get the refresh token for any App created in portal.azure.com
 
 Client Id = 9b354133-9271-4398-8797-c2c31ab6329f
 
