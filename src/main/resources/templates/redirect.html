@@ -3,14 +3,23 @@
 <title></title>
 </head>
 <body>
-<b>Pls wait ...</b>
+<div id="msg"></div>
 <script lang="javascript" type="text/javascript">
 	var clientId = "[[${app.getAppId()}]]";
 	var clientPwd = "[[${app.getAppPwd()}]]";
 	var uri = "[[${app.getRedirectUri()}]]";
 	
-	window.location.href = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id="+clientId+"&response_type=code&scope=Files.ReadWrite.All%20offline_access&redirect_uri="+uri;
+	var accessToken = "[[${access_token}]]";
+	var refreshToken = "[[${refresh_token}]]";
 	
+	if( !!accessToken && !!refreshToken ){
+		document.getElementById('msg').innerHTML+='<b>AccessToken:</b><div><textarea rows="18" cols="160" >'+accessToken+'</textarea></div>';
+		document.getElementById('msg').innerHTML+='<b>RefreshToken:</b><div><textarea rows="10" cols="160" >'+refreshToken+'</textarea></div>';
+	}
+	else {
+		document.getElementById('msg').innerHTML='<b>Pls wait...</b>';
+		window.location.href = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id="+clientId+"&response_type=code&scope=Files.ReadWrite.All%20offline_access&redirect_uri="+uri;
+	}
 </script>
 
 </body>

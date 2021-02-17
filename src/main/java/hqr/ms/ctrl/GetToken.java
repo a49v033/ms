@@ -12,7 +12,6 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
@@ -73,9 +72,10 @@ public class GetToken {
 			e.printStackTrace();
 		}
 		
-		ModelAndView index = new ModelAndView("final");
+		ModelAndView index = new ModelAndView("redirect");
 		index.addObject("access_token", accessToken);
 		index.addObject("refresh_token", refreshToken);
+		index.addObject("app", app);
 		
 		return index;
 	}
