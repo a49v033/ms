@@ -4,6 +4,8 @@ public class AppInfo {
 	private String appId;
 	private String appPwd;
 	private String redirectUri;
+	private String accessToken;
+	private String refreshToken;
 	
 	private static AppInfo appInfo;
 	public static AppInfo getInstance() {
@@ -13,9 +15,7 @@ public class AppInfo {
 		return appInfo;
 	}
 	
-	private AppInfo() {
-		
-	}
+	private AppInfo() {}
 	
 	public String getAppId() {
 		return appId;
@@ -34,5 +34,17 @@ public class AppInfo {
 	}
 	public void setRedirectUri(String redirectUri) {
 		this.redirectUri = redirectUri;
+	}
+	public String getAccessToken() {
+		return accessToken;
+	}
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+	public String getRefreshToken() {
+		return refreshToken;
+	}
+	public void setRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
 	}
 }

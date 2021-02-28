@@ -9,13 +9,13 @@
 	var clientPwd = "[[${app.getAppPwd()}]]";
 	var uri = "[[${app.getRedirectUri()}]]";
 	
-	var accessToken = "[[${access_token}]]";
-	var refreshToken = "[[${refresh_token}]]";
+	var accessToken = "[[${app.getAccessToken()}]]";
+	var refreshToken = "[[${app.getRefreshToken()}]]";
 	
 	if( !!accessToken && !!refreshToken ){
 		document.getElementById('msg').innerHTML+='<b>AccessToken:</b><div><textarea rows="18" cols="160" >'+accessToken+'</textarea></div>';
 		document.getElementById('msg').innerHTML+='<b>RefreshToken:</b><div><textarea rows="10" cols="160" >'+refreshToken+'</textarea></div>';
-		document.getElementById('msg').innerHTML+='<form action="/getNewToken" id="f1"><input type="hidden" name="refresh_token" id="refresh_token" value='+refreshToken+' /><input type="button" value="Get new one" onclick="getNewToken();" /></form>';
+		document.getElementById('msg').innerHTML+='<form action="/getToken" id="f1"><input type="hidden" name="code" id="code" value='+refreshToken+' /><input type="button" value="Get new one" onclick="getNewToken();" /></form>';
 	}
 	else {
 		document.getElementById('msg').innerHTML='<b>Pls wait...</b>';
