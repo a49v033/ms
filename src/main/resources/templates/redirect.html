@@ -13,9 +13,10 @@
 	var refreshToken = "[[${app.getRefreshToken()}]]";
 	
 	if( !!accessToken && !!refreshToken ){
-		document.getElementById('msg').innerHTML+='<b>AccessToken:</b><div><textarea rows="18" cols="160" >'+accessToken+'</textarea></div>';
-		document.getElementById('msg').innerHTML+='<b>RefreshToken:</b><div><textarea rows="10" cols="160" >'+refreshToken+'</textarea></div>';
-		document.getElementById('msg').innerHTML+='<form action="/getToken" id="f1"><input type="hidden" name="code" id="code" value='+refreshToken+' /><input type="button" value="Get new one" onclick="getNewToken();" /></form>';
+		document.getElementById('msg').innerHTML+='<b>AccessToken:</b><div><textarea rows="12" cols="160" >'+accessToken+'</textarea></div>';
+		document.getElementById('msg').innerHTML+='<b>RefreshToken:</b><div><textarea rows="8" cols="160" >'+refreshToken+'</textarea></div>';
+		document.getElementById('msg').innerHTML+='<form action="/getToken" id="f1"><input type="hidden" name="code" value='+refreshToken+' /><input type="button" value="Get new one" onclick="getNewToken();" /></form>';
+		document.getElementById('msg').innerHTML+='<form action="/search" id="f2"><input name="keyword" /><input type="button" value="Search" onclick="search();" /></form>';
 	}
 	else {
 		document.getElementById('msg').innerHTML='<b>Pls wait...</b>';
@@ -25,6 +26,11 @@
 	function getNewToken(){
 		document.getElementById("f1").submit();
 	}
+	function search(){
+		document.getElementById("f2").submit();
+	}
+	
+	
 </script>
 
 </body>
