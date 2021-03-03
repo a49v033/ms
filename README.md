@@ -68,12 +68,11 @@ git push origin dev2:dev2 将本地dev2推送到远程dev2(远程不存在dev2�
 然后使用git status查看具体冲突的文件，手动解决，并提交
 之后再merge resolve_conf->dev_drop4
 
-fatal: unable to access 'https://github.com/vanyouseea/ms.git/': OpenSSL SSL_read: Connection was reset, errno 10054
 解除ssl验证
 git config --global http.sslVerify false
 
 设置代理
-git config --global http.proxy http://proxy.ncs.com.sg:8080
+git config --global http.proxy http://127.0.0.1:1080
 
 解除代理
 git config --global --unset http.proxy
