@@ -55,7 +55,7 @@ git clone 仓库URL 下载远程仓库到本地
 git pull 刷新远程代码到本地分子
 git branch dev2 在本地创建一个dev2的分支
 git checkout dev2 切换到dev2
-git checkout src/main/resources/scripts/ksh/ta/tabatdrvr.ksh revert单个文件
+git checkout src/main/resources/hqr.jks revert单个文件
 git add filename 提交此文件到暂存区
 git add -u 将所有修改过的文件提交到暂存区
 git commit -a -m "提交的注释" 将所有git add标记的的文件提交到本地
