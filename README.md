@@ -36,7 +36,9 @@ keytool -delete -v -alias ejbca -keystore ecombatch.keystore -storepass ecombatc
 ```
 
 如果call的url是域名而不是IP还需要配置host： 
+```base
 10.170.184.112   loli.com
+```
 
 在code加载ejb 之前设置如下properties
 
