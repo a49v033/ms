@@ -1,5 +1,11 @@
 package hqr.ms.domian;
 
+/**
+ * @author vanyouseea
+ * Save the appId, appPwf, uri in domain
+ *
+ */
+
 public class AppInfo {
 	private String appId;
 	private String appPwd;
