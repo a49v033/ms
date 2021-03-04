@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title></title>
+</head>
+<body>
+<div>
+	<input id="keyword" /><input type="button" value="Search Files" onclick="search();" />
+</div>
+<div>
+	<input id="listFile" /><input type="button" value="List Files" onclick="listFile();" />
+</div>
+
+
+<script lang="javascript" type="text/javascript">
+	var accessToken = "[[${accessToken}]]";
+	var refreshToken = "[[${refreshToken}]]";
+	
+	function search(){
+		alert("Search:"+accessToken);
+	}
+	
+	function listFile(){
+		alert("listFile:"+accessToken);
+	}
+	
+</script>
+
+</body>
+</html>
