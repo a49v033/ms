@@ -3,6 +3,7 @@ package hqr.ms.ctrl;
 import java.io.IOException;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.ContentType;
@@ -26,6 +27,9 @@ import hqr.ms.util.Brower;
 
 @Controller
 public class GetNewToken {
+	
+	private String me = "NA";
+	
 	@RequestMapping(value = "/getNewToken")
 	public ModelAndView grap(@RequestParam(name = "refreshToken", required = true) String refreshToken) {
 		AppInfo app = AppInfo.getInstance();
@@ -52,9 +56,7 @@ public class GetNewToken {
 		System.out.println("Json str:"+json);
 		post.setEntity(new StringEntity(json, ContentType.APPLICATION_FORM_URLENCODED));
 
-		try {
-			CloseableHttpResponse cl = httpclient.execute(post,httpClientContext);
-			
+		try(CloseableHttpResponse cl = httpclient.execute(post,httpClientContext);) {
 			if(cl.getStatusLine().getStatusCode()==200) {
 				JSONObject jo = JSON.parseObject(EntityUtils.toString(cl.getEntity()));
 				
@@ -63,12 +65,26 @@ public class GetNewToken {
 				
 				System.out.println("New Access Token:"+newAccessToken);
 				System.out.println("New refresh_token:"+newRefreshToken);
-				
 			}
 			else {
 				System.out.println("failed:" + EntityUtils.toString(cl.getEntity()));
 			}
-			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		//get user id
+		HttpGet get = new HttpGet("https://graph.microsoft.com/v1.0/me");
+		get.setConfig(Brower.getRequestConfig());
+		get.setHeader("Authorization", newAccessToken);
+		try(CloseableHttpResponse cl = httpclient.execute(get,httpClientContext);) {
+			if(cl.getStatusLine().getStatusCode()==200) {
+				JSONObject jo = JSON.parseObject(EntityUtils.toString(cl.getEntity()));
+				me = jo.getString("userPrincipalName");
+			}
+			else {
+				System.out.println("failed:" + EntityUtils.toString(cl.getEntity()));
+			}
 			httpclient.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -77,7 +93,9 @@ public class GetNewToken {
 		ModelAndView index = new ModelAndView("api");
 		index.addObject("accessToken", newAccessToken);
 		index.addObject("refreshToken", newRefreshToken);
+		index.addObject("me", me);
 		
 		return index;
 	}
+	
 }
