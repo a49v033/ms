@@ -1,0 +1,50 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>API trail run</title>
+<script src="webjars/jquery/3.3.1/jquery.js" type="text/javascript"></script>
+</head>
+<body>
+	Welcome, <span th:text="${me}"></span>
+	<div><input type="button" value="Clear All" onclick="clearAll();" /></div>
+
+	<div>
+		<input id="keyword" /><input type="button" value="Search Files" onclick="search();" />
+		
+	</div>
+	<div>
+		<input id="listFile" /><input type="button" value="List Files" onclick="listFile();" />
+	</div>
+	<div id="res" ></div>
+
+	<script lang="javascript" type="text/javascript">
+		var accessToken = "[[${accessToken}]]";
+		var refreshToken = "[[${refreshToken}]]";
+
+		function clearAll(){
+			$('#res').html("");
+		}
+		
+		function search() {
+			var keyword = $('#keyword').val();
+			$.ajax({
+				type : "POST",
+				url : "/search",
+				data : {
+					"keyword" : keyword,
+					"accessToken" : accessToken
+				},
+				success : function(result) {
+					$('#res').html(result);
+				}
+			});
+
+		}
+
+		function listFile() {
+			alert("listFile:" + accessToken);
+		}
+
+	</script>
+
+</body>
+</html>

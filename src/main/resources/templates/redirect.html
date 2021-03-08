@@ -9,14 +9,14 @@
 	var clientPwd = "[[${app.getAppPwd()}]]";
 	var uri = "[[${app.getRedirectUri()}]]";
 	
-	var accessToken = "[[${app.getAccessToken()}]]";
-	var refreshToken = "[[${app.getRefreshToken()}]]";
+	var accessToken = "[[${accessToken}]]";
+	var refreshToken = "[[${refreshToken}]]";
 	
 	if( !!accessToken && !!refreshToken ){
 		document.getElementById('msg').innerHTML+='<b>AccessToken:</b><div><textarea rows="12" cols="160" >'+accessToken+'</textarea></div>';
 		document.getElementById('msg').innerHTML+='<b>RefreshToken:</b><div><textarea rows="8" cols="160" >'+refreshToken+'</textarea></div>';
-		document.getElementById('msg').innerHTML+='<form action="/getToken" id="f1"><input type="hidden" name="code" value='+refreshToken+' /><input type="button" value="Get new one" onclick="getNewToken();" /></form>';
-		document.getElementById('msg').innerHTML+='<form action="/search" id="f2"><input name="keyword" /><input type="button" value="Search" onclick="search();" /></form>';
+		document.getElementById('msg').innerHTML+='<form action="/getNewToken" id="f1"><input type="hidden" name="refreshToken" value='+refreshToken+' /><input type="button" value="Trail Run Some APIs" onclick="getNewToken();" /></form>';
+		//document.getElementById('msg').innerHTML+='<form action="/search" id="f2"><input type="hidden" name="accessToken" value='+accessToken+' /><input name="keyword" /><input type="button" value="Search" onclick="search();" /></form>';
 	}
 	else {
 		document.getElementById('msg').innerHTML='<b>Pls wait...</b>';
@@ -25,9 +25,6 @@
 	
 	function getNewToken(){
 		document.getElementById("f1").submit();
-	}
-	function search(){
-		document.getElementById("f2").submit();
 	}
 	
 	

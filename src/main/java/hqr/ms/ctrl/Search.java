@@ -8,17 +8,13 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import hqr.ms.domian.AppInfo;
 import hqr.ms.util.Brower;
 
 @RestController
 public class Search {
 	
 	@RequestMapping(value = "/search")
-	public String search(@RequestParam(name="keyword", required = false) String keyword) {
-		AppInfo app = AppInfo.getInstance();
-		
+	public String search(@RequestParam(name="keyword", required = false) String keyword,@RequestParam(name="accessToken", required = true)  String accessToken) {
 		//open browser
 		CloseableHttpClient httpclient = Brower.getCloseableHttpClient();
 		//html context
@@ -26,7 +22,7 @@ public class Search {
 		
 		HttpGet get = new HttpGet("https://graph.microsoft.com/v1.0/me/drive/root/search(q='"+keyword+"')?$select=id,name,file");
 		get.setConfig(Brower.getRequestConfig());
-		get.setHeader("Authorization", app.getAccessToken());
+		get.setHeader("Authorization", accessToken);
 
 		try {
 			CloseableHttpResponse cl = httpclient.execute(get, httpClientContext);

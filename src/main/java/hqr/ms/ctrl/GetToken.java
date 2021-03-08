@@ -20,6 +20,12 @@ import com.alibaba.fastjson.JSONObject;
 import hqr.ms.domian.AppInfo;
 import hqr.ms.util.Brower;
 
+/**
+ * @author vanyouseea
+ * 1st time to get the at & rt
+ */
+
+
 @Controller
 public class GetToken {
 	
@@ -30,8 +36,8 @@ public class GetToken {
 		String appPwd = app.getAppPwd();
 		String uri = app.getRedirectUri();
 		
-		String accessToken = app.getAccessToken();
-		String refreshToken = app.getRefreshToken();
+		String accessToken = null;
+		String refreshToken = null; 
 		
 		//open browser
 		CloseableHttpClient httpclient = Brower.getCloseableHttpClient();
@@ -42,16 +48,11 @@ public class GetToken {
 		post.setConfig(Brower.getRequestConfig());
 		post.setHeader("Content-Type", "application/x-www-form-urlencoded");
 		
-		String json = "";
-		
 		//1st time to init the refresh token
-		if(refreshToken==null) {
-			json = "client_id="+appId+"&redirect_uri="+uri+"&client_secret="+appPwd+"&scope=Files.ReadWrite.All%20offline_access&grant_type=authorization_code&code="+code;
-		}
+		String json = "client_id="+appId+"&redirect_uri="+uri+"&client_secret="+appPwd+"&scope=Files.ReadWrite.All%20offline_access&grant_type=authorization_code&code="+code;
+		
 		//use refresh token to get new token
-		else {
-			json = "client_id="+appId+"&redirect_uri="+uri+"&client_secret="+appPwd+"&scope=Files.ReadWrite.All%20offline_access&grant_type=refresh_token&refresh_token="+app.getRefreshToken();
-		}
+		//json = "client_id="+appId+"&redirect_uri="+uri+"&client_secret="+appPwd+"&scope=Files.ReadWrite.All%20offline_access&grant_type=refresh_token&refresh_token="+app.getRefreshToken();
 		System.out.println("Json str:"+json);
 		post.setEntity(new StringEntity(json, ContentType.APPLICATION_FORM_URLENCODED));
 
@@ -67,9 +68,6 @@ public class GetToken {
 				System.out.println("Access Token:"+accessToken);
 				System.out.println("refresh_token:"+refreshToken);
 				
-				app.setAccessToken(accessToken);
-				app.setRefreshToken(refreshToken);
-				System.out.println("Saved the Token...");
 			}
 			else {
 				System.out.println("failed:" + EntityUtils.toString(cl.getEntity()));
@@ -81,8 +79,8 @@ public class GetToken {
 		}
 		
 		ModelAndView index = new ModelAndView("redirect");
-		index.addObject("access_token", accessToken);
-		index.addObject("refresh_token", refreshToken);
+		index.addObject("accessToken", accessToken);
+		index.addObject("refreshToken", refreshToken);
 		index.addObject("app", app);
 		
 		return index;
