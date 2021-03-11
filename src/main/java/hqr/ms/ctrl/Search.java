@@ -26,7 +26,9 @@ public class Search {
 
 		try {
 			CloseableHttpResponse cl = httpclient.execute(get, httpClientContext);
-			return EntityUtils.toString(cl.getEntity());
+			String res = EntityUtils.toString(cl.getEntity());
+			httpclient.close();
+			return res;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return e.toString();

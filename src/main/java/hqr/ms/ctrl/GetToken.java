@@ -56,9 +56,7 @@ public class GetToken {
 		System.out.println("Json str:"+json);
 		post.setEntity(new StringEntity(json, ContentType.APPLICATION_FORM_URLENCODED));
 
-		try {
-			CloseableHttpResponse cl = httpclient.execute(post,httpClientContext);
-			
+		try(CloseableHttpResponse cl = httpclient.execute(post,httpClientContext);) {
 			if(cl.getStatusLine().getStatusCode()==200) {
 				JSONObject jo = JSON.parseObject(EntityUtils.toString(cl.getEntity()));
 				

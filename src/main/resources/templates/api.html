@@ -12,7 +12,7 @@
 		
 	</div>
 	<div>
-		<input id="listFile" /><input type="button" value="List Files" onclick="listFile();" />
+		<input id="path" /><input type="button" value="List Files" onclick="listFile();" />
 	</div>
 	<div id="res" ></div>
 
@@ -41,7 +41,18 @@
 		}
 
 		function listFile() {
-			alert("listFile:" + accessToken);
+			var path = $('#path').val();
+			$.ajax({
+				type : "POST",
+				url : "/listPath",
+				data : {
+					"path" : path,
+					"accessToken" : accessToken
+				},
+				success : function(result) {
+					$('#res').html(result);
+				}
+			});
 		}
 
 	</script>
