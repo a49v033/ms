@@ -53,7 +53,6 @@ public class GetNewToken {
 		//use refresh token to get new token
 		String json = "client_id="+appId+"&redirect_uri="+uri+"&client_secret="+appPwd+"&scope=Files.ReadWrite.All%20offline_access&grant_type=refresh_token&refresh_token="+refreshToken;
 		
-		System.out.println("Json str:"+json);
 		post.setEntity(new StringEntity(json, ContentType.APPLICATION_FORM_URLENCODED));
 
 		try(CloseableHttpResponse cl = httpclient.execute(post,httpClientContext);) {
