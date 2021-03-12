@@ -53,7 +53,7 @@ public class GetToken {
 		
 		//use refresh token to get new token
 		//json = "client_id="+appId+"&redirect_uri="+uri+"&client_secret="+appPwd+"&scope=Files.ReadWrite.All%20offline_access&grant_type=refresh_token&refresh_token="+app.getRefreshToken();
-		System.out.println("Json str:"+json);
+		System.out.println("Get token Json str:"+json);
 		post.setEntity(new StringEntity(json, ContentType.APPLICATION_FORM_URLENCODED));
 
 		try(CloseableHttpResponse cl = httpclient.execute(post,httpClientContext);) {
@@ -62,9 +62,6 @@ public class GetToken {
 				
 				accessToken = jo.getString("access_token");
 				refreshToken = jo.getString("refresh_token");
-				
-				System.out.println("Access Token:"+accessToken);
-				System.out.println("refresh_token:"+refreshToken);
 				
 			}
 			else {
