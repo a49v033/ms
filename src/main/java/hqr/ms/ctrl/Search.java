@@ -20,12 +20,15 @@ public class Search {
 		//html context
 		HttpClientContext httpClientContext = Brower.getHttpClientContext();
 		
-		HttpGet get = new HttpGet("https://graph.microsoft.com/v1.0/me/drive/root/search(q='"+keyword+"')?$select=id,name,file");
+		String url = "https://graph.microsoft.com/v1.0/me/drive/root/search(q='"+keyword+"')?$select=id,name,file";
+		
+		System.out.println("Search url is "+url);
+		
+		HttpGet get = new HttpGet(url);
 		get.setConfig(Brower.getRequestConfig());
 		get.setHeader("Authorization", accessToken);
 
-		try {
-			CloseableHttpResponse cl = httpclient.execute(get, httpClientContext);
+		try(CloseableHttpResponse cl = httpclient.execute(get, httpClientContext);) {
 			String res = EntityUtils.toString(cl.getEntity());
 			httpclient.close();
 			return res;

@@ -9,35 +9,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
 import hqr.ms.util.Brower;
 
 @RestController
-public class ListPath {
-	
-	@RequestMapping(value = "/listPath")
-	public String listPath(@RequestParam(name = "path", required = false) String path, @RequestParam(name="accessToken", required = true)  String accessToken) {
+public class GetFile {
+	@RequestMapping(value = "/getFile")
+	public String listPath(@RequestParam(name = "fileId", required = false) String fileId, @RequestParam(name="accessToken", required = true)  String accessToken) {
 		//open browser
 		CloseableHttpClient httpclient = Brower.getCloseableHttpClient();
 		//html context
 		HttpClientContext httpClientContext = Brower.getHttpClientContext();
-		
-		String url = ""	;
-		
-		if(path==null||"".equals(path)) {
-			url = "https://graph.microsoft.com/v1.0/me/drive/root/children?$select=id,name,size";
+	
+		if(fileId==null||"".equals(fileId)) {
+			return "Pls pass fileId";
 		}
-		else {
-			url = "https://graph.microsoft.com/v1.0/me/drive/root:/"+path+":/children?$select=id,name,size";
-		}
-		System.out.println("listPath URL is "+url);
+		
+		String url = "https://graph.microsoft.com/v1.0/me/drive/items/"+fileId;
+		
+		System.out.println("FileId URL is "+url);
 		HttpGet get = new HttpGet(url);
 		get.setConfig(Brower.getRequestConfig());
 		get.setHeader("Authorization", accessToken);
 		
-		try(CloseableHttpResponse cl = httpclient.execute(get, httpClientContext);) {
+		try {
+			CloseableHttpResponse cl = httpclient.execute(get, httpClientContext);
 			String res = EntityUtils.toString(cl.getEntity());
+			JSONObject jo = JSON.parseObject(res);
 			httpclient.close();
-			return res;
+			if(jo.getString("file")!=null) {
+				return "<a href=\""+jo.getString("@microsoft.graph.downloadUrl")+"\">"+jo.getString("name")+"</a>";
+			}
+			else {
+				return "Can't download folder";
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return e.toString();

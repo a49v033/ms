@@ -37,7 +37,6 @@ public class GetNewToken {
 		String appPwd = app.getAppPwd();
 		String uri = app.getRedirectUri();
 		
-		System.out.println("go to get getNewToken");
 		String newAccessToken = null;
 		String newRefreshToken = null; 
 		
@@ -52,6 +51,7 @@ public class GetNewToken {
 		
 		//use refresh token to get new token
 		String json = "client_id="+appId+"&redirect_uri="+uri+"&client_secret="+appPwd+"&scope=Files.ReadWrite.All%20offline_access&grant_type=refresh_token&refresh_token="+refreshToken;
+		System.out.println("Get getNewToken json "+json);
 		
 		post.setEntity(new StringEntity(json, ContentType.APPLICATION_FORM_URLENCODED));
 
@@ -62,8 +62,6 @@ public class GetNewToken {
 				newAccessToken = jo.getString("access_token");
 				newRefreshToken = jo.getString("refresh_token");
 				
-				System.out.println("New Access Token:"+newAccessToken);
-				System.out.println("New refresh_token:"+newRefreshToken);
 			}
 			else {
 				System.out.println("failed:" + EntityUtils.toString(cl.getEntity()));

@@ -5,15 +5,26 @@
 </head>
 <body>
 	Welcome, <span th:text="${me}"></span>
-	<div><input type="button" value="Clear All" onclick="clearAll();" /></div>
+	<div><input type="button" value="Clear All Output" onclick="clearAll();" /></div>
 
-	<div>
-		<input id="keyword" /><input type="button" value="Search Files" onclick="search();" />
-		
-	</div>
-	<div>
-		<input id="path" /><input type="button" value="List Files" onclick="listFile();" />
-	</div>
+	<table>
+		<tr>
+			<td>Keyword</td>
+			<td><input id="keyword" /></td>
+			<td><input type="button" value="Search Files" onclick="search();" /></td>
+		</tr>
+		<tr>
+			<td>View Path</td>
+			<td><input id="path" /></td>
+			<td><input type="button" value="List Files" onclick="listFile();" /></td>
+		</tr>
+		<tr>
+			<td>File Id</td>
+			<td><input id="fileId" /></td>
+			<td><input type="button" value="Get File" onclick="getFile();" /></td>
+		</tr>
+	</table>
+
 	<div id="res" ></div>
 
 	<script lang="javascript" type="text/javascript">
@@ -55,6 +66,21 @@
 			});
 		}
 
+		function getFile() {
+			var fileId = $('#fileId').val();
+			$.ajax({
+				type : "POST",
+				url : "/getFile",
+				data : {
+					"fileId" : fileId,
+					"accessToken" : accessToken
+				},
+				success : function(result) {
+					$('#res').html(result);
+				}
+			});
+		}
+		
 	</script>
 
 </body>
