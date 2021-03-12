@@ -39,7 +39,13 @@ public class GetFile {
 			String res = EntityUtils.toString(cl.getEntity());
 			JSONObject jo = JSON.parseObject(res);
 			httpclient.close();
-			return "<a href=\""+jo.getString("@microsoft.graph.downloadUrl")+"\">Click here to download</a>";
+			if(jo.getString("file")!=null) {
+				return "<a href=\""+jo.getString("@microsoft.graph.downloadUrl")+"\">"+jo.getString("name")+"</a>";
+			}
+			else {
+				return "Can't download folder";
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return e.toString();

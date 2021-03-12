@@ -34,8 +34,7 @@ public class ListPath {
 		get.setConfig(Brower.getRequestConfig());
 		get.setHeader("Authorization", accessToken);
 		
-		try {
-			CloseableHttpResponse cl = httpclient.execute(get, httpClientContext);
+		try(CloseableHttpResponse cl = httpclient.execute(get, httpClientContext);) {
 			String res = EntityUtils.toString(cl.getEntity());
 			httpclient.close();
 			return res;
