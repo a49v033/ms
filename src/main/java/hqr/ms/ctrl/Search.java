@@ -8,6 +8,8 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import cn.hutool.core.text.UnicodeUtil;
 import hqr.ms.util.Brower;
 
 @RestController
@@ -31,7 +33,7 @@ public class Search {
 		try(CloseableHttpResponse cl = httpclient.execute(get, httpClientContext);) {
 			String res = EntityUtils.toString(cl.getEntity());
 			httpclient.close();
-			return res;
+			return UnicodeUtil.toString(res);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return e.toString();
